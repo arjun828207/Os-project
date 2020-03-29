@@ -8,18 +8,18 @@ int main() {
     int allocation[5][4];
     int max[5][4];
     int need[5][4];
-    int p, pr, r, a, aval[4], req[4];
+    int m, n, r, a, available[4], required[4];
     bool state[5], test;
     vector < int > avl;
     //----------------------------------------
     test = true;
-    for (int i = 0; i < 4; i++)
-        work[i] = aval[i];
-    for (int i = 0; i < 5; i++)
-        state[i] = false;
+    for (int x = 0; x < 4; x++)
+        work[x] = available[x];
+    for (int x = 0; x < 5; x++)
+        state[x] = false;
     //----------------------------enter p r---------------------------------
     cout << "Enter the number of processes in the system :";
-    cin >> p;
+    cin >> m;
     cout << "\nEnter the number of recourses :";
     cin >> r;
     //---------------------enter alloc---
@@ -40,12 +40,12 @@ int main() {
     {
         cout << " A B C D\n \t ";
     }
-    for (int i = 0; i < p; i++)
+    for (int x = 0; x < m; x++)
     {
-        cout << endl << "\t" << "P" << i << ":";
+        cout << endl << "\t" << "P" << x << ":";
         for (int j = 0; j < 4; j++)
         {
-            cin >> allocation[i][j];
+            cin >> allocation[x][j];
             cout << " ";
         }
     }
@@ -59,86 +59,86 @@ int main() {
         cout << " A B C\n \t ";
     else if (r = 4)
         cout << " A B C D\n \t ";
-    for (int i = 0; i < p; i++)
+    for (int x = 0; x < m; x++)
     {
-        cout << endl << "P" << i << ":";
+        cout << endl << "P" << x << ":";
         for (int j = 0; j < 4; j++)
         {
-            cin >> max[i][j];
-            need[i][j] = max[i][j] - allocation[i][j];
+            cin >> max[x][j];
+            need[x][j] = max[x][j] - allocation[x][j];
         }
     }
     //-----------------enter ava--------------
     cout << "\nEnter the avaliable number : " << endl;
-    for (int i = 0; i < 4; i++)
+    for (int x = 0; x < 4; x++)
     {
-        cin >> aval[i];
+        cin >> available[x];
         cout << " ";
     }
     //-----------------enter request--------------
     cout << "\nEnter the number of process want be request  : ";
-    cin >> pr;
+    cin >> n;
     cout << "\nEnter the request number : " << endl;
-    for (int i = 0; i < 4; i++)
+    for (int x = 0; x < 4; x++)
     {
-        cin >> req[i];
+        cin >> required[x];
         cout << " ";
     }
     //-----------------------------------COUT---------------------
-    cout << endl << "There are " << p << " processes in the system." << endl << endl;
+    cout << endl << "There are " << m << " processes in the system." << endl << endl;
     cout << "There are " << r << " resource types." << endl << endl;
     //----------------------------------cout allocation---------------
     cout << " The allocation Matrix : " << endl << endl;
     cout << "\t  A B C D";
-    for (int i = 0; i < p; i++)
+    for (int x = 0; x < m; x++)
     {
-        cout << endl << "\tP" << i << ":";
+        cout << endl << "\tP" << x << ":";
         for (int j = 0; j < 4; j++)
         {
-            cout << allocation[i][j] << " ";
+            cout << allocation[x][j] << " ";
         }
         cout << endl;
     }
     //----------------------------------cout max---------------
     cout << endl << " The Max Matrix is...  " << endl << endl;
     cout << "\t  A B C D";
-    for (int i = 0; i < p; i++)
+    for (int x = 0; x < m; x++)
     {
-        cout << endl << "\tP" << i << ":";
+        cout << endl << "\tP" << x << ":";
         for (int j = 0; j < 4; j++)
         {
-            cout << max[i][j] << " ";
+            cout << max[x][j] << " ";
         }
         cout << endl;
     }
     //-------------------------cout need-------------------------------------------
     cout << endl << " The Need Matrix is...  " << endl << endl;
     cout << "\t  A B C D";
-    for (int i = 0; i < p; i++)
+    for (int x = 0; x < m; x++)
     {
-        cout << endl << "\tP" << i << ":";
+        cout << endl << "\tP" << x << ":";
         for (int j = 0; j < 4; j++)
         {
-            cout << need[i][j] << " ";
+            cout << need[x][j] << " ";
         }
         cout << endl;
     }
     //----------------------------- cout aval ---------------------
     cout << endl << "The Available Vector is..." << endl << endl;
     cout << "A B C D" << endl;
-    for (int i = 0; i < 4; i++)
+    for (int x = 0; x < 4; x++)
     {
-        cout << aval[i] << " ";
+        cout << available[x] << " ";
     }
     //-----------------------------------SAFE STATE-----------------------
     int k = 0;
-    for (k = 0; k < p; k++) {
+    for (k = 0; k < m; k++) {
         if (state[k] == false) {
             test = false;
             for (int j = 0; j<r; j++) {
                 if (need[k][j] > work[j])
                     break;
-                if (need[k][j] <= aval[j])
+                if (need[k][j] <= available[j])
                     test = true;
             }
         }
@@ -158,17 +158,17 @@ int main() {
     //-----------------------------------request------------------------
     cout << "\nThe Request Vector is..." << endl;
     cout << "  A B C D" << endl;
-    cout << pr << ":";
-    for (int i = 0; i < 4; i++)
+    cout << n << ":";
+    for (int x = 0; x < 4; x++)
     {
-        cout << req[i] << " ";
+        cout << required[x] << " ";
     }
     bool test2 = false;
-    for (int i = 0; i < p; i++) {
-        if (pr == p) {
+    for (int x = 0; x < m; x++) {
+        if (n == m) {
             for (int j = 0; j < 4; j++)
             {
-                if (req[j] <= avl[j] && req[j] <= need[i][j])
+                if (required[j] <= avl[j] && required[j] <= need[x][j])
                 {
                     test2 = true;
                 }
@@ -181,16 +181,16 @@ int main() {
             {
                 for (int n = 0; n < r; n++)
                 {
-                    aval[n] = aval[n] - req[n];
-                    allocation[i][n] = allocation[i][n] + req[n];
-                    need[i][n] = need[i][n] - req[n];
+                    available[n] = available[n] - required[n];
+                    allocation[x][n] = allocation[x][n] + required[n];
+                    need[x][n] = need[x][n] - required[n];
                 }
                 cout << "THE REQUEST CAN BE GRANTED!" << endl << endl;
                 cout << "The Available Vector is...";
                 cout << "A B C D" << endl;
                 for (int x = 0; x < r; x++)
                 {
-                    cout << aval[x] << " ";
+                    cout << available[x] << " ";
                 }
             }
             else
